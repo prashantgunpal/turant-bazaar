@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turant Bazaar — Sardarshahar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --green:#0c8f2f;
+  --green-dark:#087526;
+  --light-green:#eaf8ed;
+  --ink:#1f1f1f;
+  --muted:#777;
+  --line:#e5e5e5;
+  --bg:#fff;
+  --card:#fff;
+  --soft:#f7f8f7;
+  --yellow:#ffd23f;
+  --danger:#e53935;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  color:var(--ink);
+  background:#fff;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.topbar{
+  height:76px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:#fff;
+}
+.topbar-inner{
+  width:min(1400px,calc(100% - 48px));
+  margin:auto;
+  display:grid;
+  grid-template-columns:190px 270px minmax(280px,1fr) 100px 125px;
+  gap:24px;
+  align-items:center;
+}
+.logo{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:-1.8px;
+  color:var(--green);
+}
+.logo span{color:#111}
+.location{
+  line-height:1.2;
+  min-width:0;
+}
+.location .eta{font-size:16px;font-weight:800}
+.location .place{
+  margin-top:4px;
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.location .pin{color:#e51b23}
+.search{
+  height:50px;
+  background:#f6f6f6;
+  border:1px solid #dedede;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  padding:0 16px;
+}
+.search span{font-size:22px;margin-right:10px}
+.search input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  font-size:15px;
+}
+.login-btn{
+  border:0;
+  background:transparent;
+  font-weight:600;
+}
+.cart-top{
+  height:50px;
+  border:0;
+  border-radius:12px;
+  background:#f0f0f0;
+  font-weight:800;
+  color:#666;
+}
+.cart-top.active{background:var(--green);color:#fff}
+
+.page{
+  width:min(1400px,calc(100% - 48px));
+  margin:auto;
+}
+.hero{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:16px;
+  margin-top:18px;
+}
+.hero-card{
+  min-height:190px;
+  border-radius:18px;
+  padding:28px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-card h1,.hero-card h2{margin:0 0 10px;line-height:1.1}
+.hero-card h1{font-size:31px;max-width:520px}
+.hero-card h2{font-size:22px}
+.hero-card p{margin:0 0 20px;max-width:520px;line-height:1.5}
+.hero-main{background:linear-gradient(110deg,#e6f8e7,#fff2bd)}
+.hero-blue{background:#e9f2ff}
+.hero-yellow{background:#fff0b8}
+.hero-icons{
+  position:absolute;
+  right:22px;
+  bottom:5px;
+  font-size:72px;
+  letter-spacing:-18px;
+}
+.shop-btn{
+  background:#fff;
+  border:0;
+  border-radius:8px;
+  padding:11px 17px;
+  font-weight:800;
+}
+
+.section{margin-top:30px}
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+.section-head h2{font-size:24px;margin:0}
+.see-all{
+  color:var(--green);
+  font-weight:800;
+  border:0;
+  background:transparent;
+}
+
+.category-row{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:4px;
+}
+.category-row::-webkit-scrollbar{display:none}
+.category{
+  flex:0 0 112px;
+  text-align:center;
+  border:0;
+  background:#fff;
+}
+.category-img{
+  height:108px;
+  border-radius:14px;
+  background:#f4f7f4;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:48px;
+  border:1px solid #edf0ed;
+}
+.category-name{
+  margin-top:9px;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:700;
+}
+
+.product-row{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding:2px 2px 10px;
+}
+.product-row::-webkit-scrollbar{display:none}
+.product-card{
+  flex:0 0 190px;
+  border:1px solid #e2e2e2;
+  border-radius:12px;
+  background:#fff;
+  overflow:hidden;
+  position:relative;
+  transition:.15s;
+}
+.product-card:hover{
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
+  transform:translateY(-1px);
+}
+.product-image{
+  height:190px;
+  background:#f8f8f4;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.fallback-art{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  background:linear-gradient(135deg,#f8f7ef,#edf5ee);
+}
+.fallback-art .emoji{font-size:66px}
+.fallback-art small{
+  margin-top:8px;
+  font-weight:800;
+  color:#777;
+  font-size:11px;
+}
+.product-body{padding:12px}
+.delivery-time{
+  display:inline-flex;
+  background:#eef7ef;
+  color:#333;
+  border-radius:5px;
+  padding:4px 7px;
+  font-size:10px;
+  font-weight:800;
+  margin-bottom:9px;
+}
+.product-name{
+  font-weight:700;
+  font-size:14px;
+  line-height:1.3;
+  min-height:37px;
+}
+.product-unit{
+  color:#888;
+  font-size:12px;
+  margin-top:8px;
+}
+.product-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:13px;
+}
+.price{font-weight:800;font-size:15px}
+.mrp{color:#999;text-decoration:line-through;font-size:11px;margin-left:4px}
+.add-btn{
+  min-width:68px;
+  height:36px;
+  border:1px solid var(--green);
+  color:var(--green);
+  background:#fff;
+  border-radius:8px;
+  font-weight:800;
+}
+.add-btn:hover{background:var(--light-green)}
+.qty{
+  height:36px;
+  background:var(--green);
+  color:#fff;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.qty button{
+  width:31px;
+  height:36px;
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-weight:900;
+}
+.qty span{width:25px;text-align:center;font-weight:800}
+
+.offer-strip{
+  margin-top:32px;
+  background:#f5fbf5;
+  border:1px solid #d8efd9;
+  border-radius:16px;
+  padding:18px 22px;
+  display:flex;
+  gap:20px;
+  overflow:auto;
+}
+.offer{
+  min-width:220px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.offer-icon{font-size:34px}
+.offer b{display:block;font-size:14px}
+.offer small{color:#777}
+
+.footer{
+  margin-top:70px;
+  border-top:1px solid var(--line);
+  padding:45px 0 70px;
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr 1fr;
+  gap:35px;
+}
+.footer h3{margin:0 0 15px;font-size:15px}
+.footer a,.footer p{
+  display:block;
+  color:#777;
+  font-size:13px;
+  margin:9px 0;
+}
+.footer-brand{font-size:25px;font-weight:800;color:var(--green)}
+.footer-note{line-height:1.5}
+
+#cart-bar{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:20px;
+  z-index:60;
+  width:min(760px,calc(100% - 28px));
+  background:var(--green);
+  color:#fff;
+  border-radius:14px;
+  padding:10px 12px 10px 18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.22);
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+}
+#cart-bar.show{display:flex}
+#cart-bar button{
+  background:#fff;
+  color:var(--green);
+  border:0;
+  border-radius:9px;
+  padding:11px 22px;
+  font-weight:800;
+}
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:90;
+}
+.overlay.show{display:block}
+.drawer{
+  position:fixed;
+  right:-520px;
+  top:0;
+  bottom:0;
+  width:min(500px,100%);
+  background:#fff;
+  z-index:100;
+  transition:right .22s ease;
+  display:flex;
+  flex-direction:column;
+  box-shadow:-8px 0 30px rgba(0,0,0,.18);
+}
+.drawer.show{right:0}
+.drawer-head{
+  padding:20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.drawer-head h2{margin:0;font-size:21px}
+.close{
+  border:0;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#f5f5f0;
+  font-size:22px;
+}
+.cart-items{padding:10px 20px;overflow:auto;flex:1}
+.cart-item{
+  display:grid;
+  grid-template-columns:62px 1fr auto;
+  gap:12px;
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+}
+.cart-thumb{
+  width:62px;height:62px;border-radius:9px;
+  background:#f7f7f2;
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;
+}
+.cart-item-name{font-weight:700;font-size:14px}
+.cart-item-price{font-weight:800;margin-top:7px}
+.cart-qty{display:flex;align-items:center;border:1px solid #ddd;border-radius:8px;height:34px}
+.cart-qty button{width:30px;height:32px;border:0;background:#fff;font-weight:900}
+.cart-qty span{width:25px;text-align:center}
+.cart-summary{
+  border-top:1px solid var(--line);
+  padding:18px 20px 22px;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  margin:7px 0;
+  font-size:14px;
+}
+.summary-total{
+  padding-top:12px;
+  margin-top:10px;
+  border-top:1px dashed #ddd;
+  font-size:18px;
+  font-weight:800;
+}
+.checkout-main{
+  width:100%;
+  border:0;
+  background:var(--green);
+  color:#fff;
+  padding:14px;
+  border-radius:10px;
+  font-weight:800;
+  margin-top:14px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:120;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(560px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.modal-head{
+  padding:20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.modal-head h2{margin:0}
+.checkout-body{padding:20px}
+.form-title{font-weight:800;margin:2px 0 16px;font-size:17px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}
+.form-group input{
+  width:100%;
+  height:48px;
+  border:1px solid #d9d9d9;
+  border-radius:9px;
+  padding:0 13px;
+  outline:none;
+}
+.form-group input:focus{border-color:var(--green)}
+.payment-options{display:grid;gap:10px;margin-bottom:18px}
+.payment-option{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:14px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.payment-option input{accent-color:var(--green);margin-top:4px}
+.payment-option b{font-size:14px}
+.payment-option small{display:block;color:#888;margin-top:4px}
+
+.empty{
+  padding:50px 20px;
+  text-align:center;
+  color:#777;
+}
+.loading{padding:50px;text-align:center;color:#777}
+
+@media(max-width:1000px){
+  .topbar-inner{
+    grid-template-columns:150px 210px 1fr 90px;
+  }
+  .login-btn{display:none}
+  .hero{grid-template-columns:1fr 1fr}
+  .hero-main{grid-column:1/-1}
+}
+@media(max-width:700px){
+  .topbar{height:auto;position:relative;padding:12px 0}
+  .topbar-inner{
+    width:calc(100% - 24px);
+    grid-template-columns:1fr auto;
+    gap:10px;
+  }
+  .logo{font-size:28px}
+  .location{grid-column:1/-1;grid-row:2}
+  .search{grid-column:1/-1;grid-row:3}
+  .cart-top{grid-column:2;grid-row:1}
+  .page{width:calc(100% - 24px)}
+  .hero{grid-template-columns:1fr;margin-top:12px}
+  .hero-main{grid-column:auto}
+  .hero-card{min-height:170px;padding:22px}
+  .hero-card h1{font-size:25px}
+  .product-card{flex-basis:175px}
+  .product-image{height:175px}
+  .footer{grid-template-columns:1fr 1fr}
+}
+@media(max-width:430px){
+  .footer{grid-template-columns:1fr}
+  .category{flex-basis:95px}
+  .category-img{height:88px}
+}
+
+.area-option{width:100%;border:1px solid #ddd;background:#fff;border-radius:12px;padding:14px;text-align:left;display:flex;justify-content:space-between;align-items:center}.area-option:hover{border-color:var(--green);background:#f5fff7}.area-option.selected{border:2px solid var(--green);background:#effbf2}.area-name{font-weight:800}.area-meta{font-size:12px;color:#777;margin-top:4px}
+
+/* Customer auth + modern location picker */
+.location-modal{width:min(560px,100%)}
+.location-search{height:50px;width:100%;border:1px solid #ddd;border-radius:10px;padding:0 14px;outline:none;font-size:15px}
+.location-search:focus{border-color:var(--green)}
+.detect-btn{width:100%;height:52px;border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:800;font-size:15px;margin-top:12px}
+.detect-btn:disabled{opacity:.65;cursor:wait}
+.location-divider{display:flex;align-items:center;gap:10px;color:#999;font-size:12px;margin:18px 0}.location-divider:before,.location-divider:after{content:"";height:1px;background:#e5e5e5;flex:1}
+.location-status{padding:12px;border-radius:10px;background:#f7f8f7;color:#666;font-size:13px;margin-top:12px;display:none}.location-status.show{display:block}
+.location-result{margin-top:12px;display:grid;gap:8px}.location-result button{border:1px solid #ddd;background:#fff;border-radius:10px;padding:12px;text-align:left}.location-result button:hover{border-color:var(--green);background:#f5fff7}
+.selected-location{padding:12px;border:1px solid #dce9df;background:#f3fbf5;border-radius:10px;margin-top:10px}.selected-location b{display:block;margin-bottom:4px}
+.auth-modal{width:min(430px,100%)}
+.auth-body{padding:24px}.auth-sub{color:#777;font-size:13px;margin:6px 0 18px}.auth-input{width:100%;height:50px;border:1px solid #ddd;border-radius:10px;padding:0 14px;outline:none}.auth-input:focus{border-color:var(--green)}
+.auth-btn{width:100%;height:50px;border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:800;margin-top:12px}.auth-btn:disabled{opacity:.65}
+.otp-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;width:100%;min-width:0}.otp-input{width:100%;min-width:0;box-sizing:border-box;text-align:center;font-size:20px;font-weight:800;height:48px;border:1px solid #ddd;border-radius:8px;outline:none}.otp-input:focus{border-color:var(--green)}
+.dev-otp{background:#fff7d6;border:1px solid #f0d66d;border-radius:9px;padding:10px;font-size:12px;margin-top:12px;color:#6a5600;display:none}.dev-otp.show{display:block}
+.account-menu{position:fixed;top:70px;right:24px;width:230px;background:#fff;border:1px solid #ddd;border-radius:12px;box-shadow:0 15px 40px rgba(0,0,0,.16);padding:8px;z-index:1300;display:none}.account-menu.show{display:block}.account-menu button{display:block;width:100%;border:0;background:#fff;text-align:left;padding:11px;border-radius:8px}.account-menu button:hover{background:#f5f5f5}.account-menu .user-info{padding:10px;border-bottom:1px solid #eee;margin-bottom:4px}.account-menu small{display:block;color:#777;margin-top:3px}
+@media(max-width:700px){.account-menu{right:12px}.location-modal{width:100%}.otp-row{gap:5px}}
+
+
+.checkout-step-note{font-size:12px;color:#777;margin-left:14px;margin-top:2px}.checkout-progress{display:flex;align-items:center;gap:7px;font-size:11px;color:#aaa;margin-bottom:18px}.checkout-progress .done,.checkout-progress .active{color:var(--green);font-weight:800}.checkout-progress .line{height:1px;background:#ddd;flex:1}.checkout-selected-location{display:flex;align-items:center;justify-content:space-between;gap:10px}.checkout-selected-location button{border:0;background:#eef8f0;color:var(--green);font-weight:800;border-radius:8px;padding:8px 11px;cursor:pointer}.checkout-selected-location span{display:block;font-size:12px;color:#777;margin-top:4px}.address-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-group label span{font-weight:400;color:#999}.payment-option{position:relative;cursor:pointer}.payment-option.selected{border-color:var(--green);background:#f3fbf4}.payment-check{display:none;margin-left:auto;width:20px;height:20px;border-radius:50%;background:var(--green);color:white;text-align:center;font-size:13px;line-height:20px}.payment-option.selected .payment-check{display:block}.bill-card{background:#fafbfa;border:1px solid #eee;border-radius:12px;padding:12px 14px;margin:14px 0}.bill-title{font-weight:800;margin-bottom:8px}.secure-note{font-size:11px;color:#777;background:#f7f8f7;border-radius:9px;padding:10px;margin-bottom:12px}.order-success-box{text-align:center;padding:30px}.success-icon{width:58px;height:58px;border-radius:50%;background:#0a9a2f;color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;margin:0 auto 12px}.success-subtitle{color:#777;margin:0 0 15px}.order-number{display:inline-block;background:#f1f8f2;color:var(--green);font-weight:900;border-radius:20px;padding:8px 14px;margin-bottom:18px}.success-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}.success-info-grid>div{background:#f8f9f8;border-radius:10px;padding:11px}.success-info-grid span{display:block;font-size:11px;color:#888}.success-info-grid b{display:block;margin-top:4px}.success-address{text-align:left;border:1px solid #eee;border-radius:10px;padding:12px;margin:12px 0}.success-address span{display:block;color:#666;font-size:12px;margin-top:4px}.success-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.secondary-action{border:1px solid #ddd;background:#fff;border-radius:10px;padding:13px;font-weight:800;cursor:pointer}.checkout-main:disabled{opacity:.6;cursor:not-allowed}
+@media(max-width:650px){.address-grid,.success-info-grid,.success-actions{grid-template-columns:1fr}.checkout-step-note{display:none}}
+
+/* Order tracking */
+.tracking-card{background:#fff;border:1px solid #e5e7e5;border-radius:14px;padding:18px;margin-top:12px}.tracking-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.tracking-status{color:var(--green);font-weight:900;text-transform:capitalize}.tracking-steps{position:relative;margin:22px 4px 8px}.tracking-step{display:grid;grid-template-columns:34px 1fr;gap:12px;position:relative;min-height:62px}.tracking-dot{width:24px;height:24px;border-radius:50%;border:2px solid #d8ddd9;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;z-index:2}.tracking-step.done .tracking-dot,.tracking-step.active .tracking-dot{background:var(--green);border-color:var(--green);color:#fff}.tracking-step:not(:last-child)::before{content:"";position:absolute;left:11px;top:24px;width:2px;height:42px;background:#e1e5e2}.tracking-step.done:not(:last-child)::before{background:var(--green)}.tracking-step b{display:block;margin-top:1px}.tracking-step small{display:block;color:#888;margin-top:3px}.track-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.track-refresh{border:1px solid #ddd;background:#fff;border-radius:10px;padding:11px;font-weight:800;cursor:pointer}.track-refresh:hover{border-color:var(--green)}
+@media(max-width:650px){.track-actions{grid-template-columns:1fr}.success-info-grid{grid-template-columns:1fr}.address-grid{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">Turant<span>.</span></div>
+
+    <button class="location" onclick="openLocationPicker()" style="border:0;background:transparent;text-align:left;padding:0;cursor:pointer">
+      <div class="eta" id="headerEta">Select delivery area</div>
+      <div class="place"><span class="pin">📍</span> <span id="headerArea">Sardarshahar</span> ▾</div>
+    </button>
+
+    <div class="search">
+      <span>⌕</span>
+      <input id="searchInput" type="text"
+        placeholder='Search for products, "milk", "atta"...'
+        oninput="renderProducts()">
+    </div>
+
+    <button id="loginBtn" class="login-btn" onclick="showLogin()">Login</button>
+
+    <button id="topCart" class="cart-top" onclick="openCart()">🛒 My Cart</button>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="hero">
+    <div class="hero-card hero-main">
+      <h1>Fresh groceries delivered to your doorstep</h1>
+      <p>Daily needs, dairy, fruits, vegetables, sweets aur local grocery — Sardarshahar mein fast delivery.</p>
+      <button class="shop-btn" onclick="document.getElementById('productsStart').scrollIntoView()">Shop Now →</button>
+      <div class="hero-icons">🥛 🍎 🥦 🥕</div>
+    </div>
+
+    <div class="hero-card hero-blue">
+      <h2>Daily essentials</h2>
+      <p>Milk, bread, atta & everyday needs.</p>
+      <button class="shop-btn" onclick="filterCategory('Daily')">Explore</button>
+    </div>
+
+    <div class="hero-card hero-yellow">
+      <h2>Fresh & local</h2>
+      <p>Nearby Sardarshahar vendors ke products.</p>
+      <button class="shop-btn" onclick="document.getElementById('productsStart').scrollIntoView()">View all</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Shop by category</h2>
+      <button class="see-all" onclick="filterCategory('All')">See all</button>
+    </div>
+    <div class="category-row" id="categoryRow"></div>
+  </section>
+
+  <section class="section" id="productsStart">
+    <div id="productSections">
+      <div class="loading">Loading products…</div>
+    </div>
+  </section>
+
+  <div class="offer-strip">
+    <div class="offer">
+      <div class="offer-icon">⚡</div>
+      <div><b>Fast local delivery</b><small>Sardarshahar ke selected areas</small></div>
+    </div>
+    <div class="offer">
+      <div class="offer-icon">🏪</div>
+      <div><b>Local vendors</b><small>Apne shehar ki dukaano se</small></div>
+    </div>
+    <div class="offer">
+      <div class="offer-icon">💵</div>
+      <div><b>Cash on Delivery</b><small>Delivery par payment</small></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div>
+      <div class="footer-brand">Turant.</div>
+      <p class="footer-note">Sardarshahar ka local quick-commerce platform. Daily-use products ko nearby vendors se aapke ghar tak pahunchane ka simple solution.</p>
+    </div>
+    <div>
+      <h3>Useful Links</h3>
+      <a href="#">About Turant Bazaar</a>
+      <a href="#">Contact</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+    </div>
+    <div>
+      <h3>Categories</h3>
+      <a href="#" onclick="filterCategory('Daily');return false">Dairy, Bread & Eggs</a>
+      <a href="#" onclick="filterCategory('Sabzi');return false">Fruits & Vegetables</a>
+      <a href="#" onclick="filterCategory('Anaj');return false">Atta, Rice & Dal</a>
+      <a href="#" onclick="filterCategory('Mithai');return false">Sweets & Chocolates</a>
+    </div>
+    <div>
+      <h3>For Business</h3>
+      <a href="#">Become a Vendor</a>
+      <a href="#">Partner with us</a>
+      <a href="/admin">Admin Panel</a>
+    </div>
+  </footer>
+</main>
+
+<div id="locationOverlay" class="overlay" onclick="closeLocationPicker()"></div>
+<div id="locationModal" class="modal">
+  <div class="modal-box location-modal">
+    <div class="modal-head">
+      <div>
+        <h2 style="margin:0">📍 Where should we deliver?</h2>
+        <div style="color:#777;font-size:13px;margin-top:5px">Use your current location or search your delivery address.</div>
+      </div>
+      <button class="close" onclick="closeLocationPicker()">×</button>
+    </div>
+    <div class="checkout-body">
+      <button id="detectLocationBtn" class="detect-btn" onclick="detectMyLocation()">📍 Detect my current location</button>
+      <div class="location-divider">OR</div>
+      <input id="locationSearchInput" class="location-search" type="text" placeholder="Search delivery location" oninput="debouncedLocationSearch()">
+      <div id="locationStatus" class="location-status"></div>
+      <div id="locationResults" class="location-result"></div>
+      <div style="margin-top:16px;padding:12px;border-radius:10px;background:#f7f8f7;font-size:12px;color:#666">
+        🔒 Your location is used only to check delivery availability and prepare your order address.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="authOverlay" class="overlay" onclick="closeLogin()"></div>
+<div id="authModal" class="modal">
+  <div class="modal-box auth-modal">
+    <div class="modal-head">
+      <div><h2 id="authTitle" style="margin:0">Login / Sign up</h2></div>
+      <button class="close" onclick="closeLogin()">×</button>
+    </div>
+    <div class="auth-body">
+      <div id="phoneStep">
+        <div class="auth-sub">Mobile number se login karein. Hum OTP bhejenge.</div>
+        <input id="loginPhone" class="auth-input" type="tel" maxlength="10" placeholder="10 digit mobile number">
+        <button id="sendOtpBtn" class="auth-btn" onclick="sendOtp()">Continue</button>
+      </div>
+      <div id="otpStep" style="display:none">
+        <div class="auth-sub">OTP enter karein jo aapke mobile par bheja gaya hai.</div>
+        <div class="otp-row">
+          <input class="otp-input" maxlength="1" inputmode="numeric">
+          <input class="otp-input" maxlength="1" inputmode="numeric">
+          <input class="otp-input" maxlength="1" inputmode="numeric">
+          <input class="otp-input" maxlength="1" inputmode="numeric">
+          <input class="otp-input" maxlength="1" inputmode="numeric">
+          <input class="otp-input" maxlength="1" inputmode="numeric">
+        </div>
+        <div id="devOtp" class="dev-otp"></div>
+        <button id="verifyOtpBtn" class="auth-btn" onclick="verifyOtp()">Verify & Continue</button>
+        <button style="width:100%;border:0;background:transparent;padding:12px;margin-top:5px;color:#555" onclick="backToPhone()">← Change mobile number</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="accountMenu" class="account-menu">
+  <div class="user-info"><b id="accountName">Customer</b><small id="accountPhone"></small></div>
+  <button onclick="openLocationPicker();closeAccountMenu()">📍 Change Location</button>
+  <button onclick="openMyOrders();closeAccountMenu()">📦 My Orders</button>
+  <button onclick="logoutCustomer()">↪ Logout</button>
+</div>
+
+<div id="cart-bar">
+  <span id="cartBarText">0 items — ₹0</span>
+  <button onclick="openCart()">View Cart</button>
+</div>
+
+<div id="cartOverlay" class="overlay" onclick="closeCart()"></div>
+<aside id="cartDrawer" class="drawer">
+  <div class="drawer-head">
+    <h2>🛒 My Cart</h2>
+    <button class="close" onclick="closeCart()">×</button>
+  </div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-summary">
+    <div class="summary-row"><span>Subtotal</span><b id="cartSubtotal">₹0</b></div>
+    <div class="summary-row"><span>Delivery Fee</span><b id="cartDeliveryFee">₹0</b></div>
+    <div class="summary-row summary-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="checkout-main" onclick="proceedToCheckout()">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<div id="modalOverlay" class="overlay" onclick="closeCheckout()"></div>
+<div id="checkoutModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Checkout</h2><div class="checkout-step-note">Review your delivery details & payment</div>
+      <button class="close" onclick="closeCheckout()">×</button>
+    </div>
+
+    <div class="checkout-body">
+      <div class="checkout-progress">
+        <span class="done">✓ Location</span><span class="line"></span><span class="active">2 Payment</span><span class="line"></span><span>3 Confirm</span>
+      </div>
+
+      <div class="form-title">📍 Delivery Details</div>
+
+      <div class="selected-location checkout-selected-location" id="checkoutLocation">
+        <div><b>📍 Delivery location</b><span id="checkoutLocationText">Select your location first.</span></div>
+        <button type="button" onclick="changeCheckoutLocation()">Change</button>
+      </div>
+      <input id="customer-area" type="hidden" value="">
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input id="customer-name" type="text" placeholder="Enter your full name">
+      </div>
+
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input id="customer-phone" type="tel" maxlength="10" placeholder="10 digit mobile number">
+      </div>
+
+      <div class="address-grid">
+        <div class="form-group">
+          <label>House / Flat / Shop No.</label>
+          <input id="customer-address" type="text" placeholder="e.g. House 12, Ward 8">
+        </div>
+        <div class="form-group">
+          <label>Landmark <span>(optional)</span></label>
+          <input id="customer-landmark" type="text" placeholder="Near school, temple, shop...">
+        </div>
+      </div>
+
+      <div class="form-title">💳 Payment Method</div>
+
+      <div class="payment-options">
+        <label class="payment-option selected" onclick="selectPayment('cod')">
+          <input type="radio" name="payment" value="cod" checked>
+          <div><b>💵 Cash on Delivery</b><small>Pay when your order arrives</small></div><span class="payment-check">✓</span>
+        </label>
+        <label class="payment-option" onclick="selectPayment('upi')">
+          <input type="radio" name="payment" value="upi">
+          <div><b>📱 UPI</b><small>Online UPI payment — gateway integration next</small></div><span class="payment-check">✓</span>
+        </label>
+      </div>
+
+      <div class="bill-card">
+        <div class="bill-title">Bill Details</div>
+        <div class="summary-row"><span>Item total</span><b id="checkoutSubtotal">₹0</b></div>
+        <div class="summary-row"><span>Delivery fee</span><b id="checkoutDeliveryFee">₹0</b></div>
+        <div class="summary-row"><span>Platform fee</span><b>₹0</b></div>
+        <div class="summary-row summary-total"><span>To Pay</span><span id="checkoutTotal">₹0</span></div>
+      </div>
+
+      <div class="secure-note">🔒 Your order details are sent securely to Turant Bazaar. COD orders do not require online payment.</div>
+      <button id="placeOrderBtn" class="checkout-main" onclick="placeOrder()">Place Order • ₹0</button>
+    </div>
+  </div>
+</div>
+
+<div id="orderSuccessOverlay" class="overlay"></div>
+<div id="orderSuccessModal" class="modal">
+  <div class="modal-box order-success-box">
+    <div class="success-icon">✓</div>
+    <h2>Order placed successfully!</h2>
+    <p class="success-subtitle">Thank you for shopping with Turant Bazaar.</p>
+    <div class="order-number" id="successOrderNumber">Order #—</div>
+    <div class="success-info-grid">
+      <div><span>Estimated delivery</span><b>15–30 mins</b></div>
+      <div><span>Payment</span><b id="successPayment">Cash on Delivery</b></div>
+      <div><span>Total paid</span><b id="successTotal">₹0</b></div>
+      <div><span>Status</span><b>Placed</b></div>
+    </div>
+    <div class="success-address"><b>📍 Deliver to</b><span id="successAddress">Sardarshahar</span></div>
+    <div class="success-actions">
+      <button class="secondary-action" onclick="openTrackingFromSuccess()">Track Order</button>
+      <button class="secondary-action" onclick="openMyOrdersFromSuccess()">View My Orders</button>
+      <button class="checkout-main" onclick="closeOrderSuccess()">Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<div id="trackingOverlay" class="overlay" onclick="closeTracking()"></div>
+<div id="trackingModal" class="modal">
+  <div class="modal-box" style="width:min(620px,100%)">
+    <div class="modal-head"><h2 style="margin:0">🚚 Track Order</h2><button class="close" onclick="closeTracking()">×</button></div>
+    <div class="checkout-body" id="trackingBody"><div class="empty">Loading order…</div></div>
+  </div>
+</div>
+
+<div id="ordersOverlay" class="overlay" onclick="closeMyOrders()"></div>
+<div id="ordersModal" class="modal">
+  <div class="modal-box" style="width:min(760px,100%)">
+    <div class="modal-head"><h2 style="margin:0">📦 My Orders</h2><button class="close" onclick="closeMyOrders()">×</button></div>
+    <div class="checkout-body" id="myOrdersBody"><div class="empty">Loading orders…</div></div>
+  </div>
+</div>
+
+<script>
+let products = [];
+let cart = {};
+let selectedCategory = "All";
+let deliveryAreas = [];
+let selectedArea = localStorage.getItem("turant_delivery_area") || "";
+let selectedDeliveryFee = 0;
+let selectedEtaMin = 0;
+let lastOrderId = null;
+let trackingTimer = null;
+let selectedEtaMax = 0;
+let selectedLatitude = Number(localStorage.getItem("turant_latitude") || 0);
+let selectedLongitude = Number(localStorage.getItem("turant_longitude") || 0);
+let selectedAddress = localStorage.getItem("turant_delivery_address") || "";
+let locationVerified = localStorage.getItem("turant_location_verified") === "1";
+let currentUser = null;
+let locationSearchTimer = null;
+
+const categories = [
+  ["All","🛒"],
+  ["Daily","🥛"],
+  ["Sabzi","🥬"],
+  ["Anaj","🌾"],
+  ["Mithai","🍬"],
+  ["Drinks","🥤"],
+  ["Snacks","🍟"],
+  ["Breakfast","🍳"],
+  ["Bakery","🍪"],
+  ["Tea","☕"],
+  ["Masala","🧂"],
+  ["Personal","🧴"]
+];
+
+const categoryNames = {
+  Daily:"Dairy, Bread & Eggs",
+  Sabzi:"Fruits & Vegetables",
+  Anaj:"Atta, Rice & Dal",
+  Mithai:"Sweets & Chocolates",
+  Drinks:"Cold Drinks & Juices",
+  Snacks:"Snacks & Munchies",
+  Breakfast:"Breakfast & Instant Food",
+  Bakery:"Bakery & Biscuits",
+  Tea:"Tea & Coffee",
+  Masala:"Masala, Oil & More",
+  Personal:"Personal Care"
+};
+
+const categoryEmoji = {
+  Daily:"🥛", Sabzi:"🥬", Anaj:"🌾", Mithai:"🍬",
+  Drinks:"🥤", Snacks:"🍟", Breakfast:"🍳",
+  Bakery:"🍪", Tea:"☕", Masala:"🧂", Personal:"🧴"
+};
+
+function money(n){
+  return "₹" + Number(n || 0).toFixed(0);
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function emojiForProduct(name, cat){
+  const n = String(name || "").toLowerCase();
+  const map = [
+    [["milk","doodh","paneer","curd","dahi","butter"],"🥛"],
+    [["egg","anda"],"🥚"],
+    [["bread"],"🍞"],
+    [["tomato","tamatar"],"🍅"],
+    [["potato","aloo"],"🥔"],
+    [["onion","pyaz"],"🧅"],
+    [["lemon","nimbu"],"🍋"],
+    [["banana","kela"],"🍌"],
+    [["apple","seb"],"🍎"],
+    [["mango","aam"],"🥭"],
+    [["cucumber","kheera"],"🥒"],
+    [["carrot","gajar"],"🥕"],
+    [["palak","spinach"],"🥬"],
+    [["cauliflower","gobhi"],"🥦"],
+    [["bhindi","okra"],"🫑"],
+    [["rice","chawal"],"🍚"],
+    [["atta","flour"],"🌾"],
+    [["dal","lentil"],"🫘"],
+    [["sugar","chini"],"🍚"],
+    [["salt","namak"],"🧂"],
+    [["laddu","mithai","sweet"],"🍬"],
+    [["juice","drink","cola","pepsi"],"🥤"],
+    [["chips","namkeen"],"🍟"],
+    [["biscuit","cookie"],"🍪"],
+    [["tea","chai"],"🍵"],
+    [["coffee"],"☕"],
+    [["oil","tel"],"🫗"],
+    [["soap","shampoo","lotion","toothpaste"],"🧴"],
+    [["noodle","maggi"],"🍜"]
+  ];
+  for(const [words,emoji] of map){
+    if(words.some(w => n.includes(w))) return emoji;
+  }
+  return categoryEmoji[cat] || "🛍️";
+}
+
+function fallbackArt(product){
+  const emoji = emojiForProduct(product.name, product.category);
+  const initials = String(product.name || "Product").slice(0,18);
+  return `<div class="fallback-art">
+    <div class="emoji">${emoji}</div>
+    <small>${escapeHtml(initials)}</small>
+  </div>`;
+}
+
+function imageHtml(product){
+  if(product.image_url && String(product.image_url).trim()){
+    return `<img src="${escapeHtml(product.image_url)}" alt="${escapeHtml(product.name)}"
+      onerror="this.parentElement.innerHTML=fallbackArt(products.find(p=>String(p.id)===String(${Number(product.id)})) || {});">`;
+  }
+  return fallbackArt(product);
+}
+
+function renderCategories(){
+  const row = document.getElementById("categoryRow");
+  row.innerHTML = categories.map(([cat,icon]) => `
+    <button class="category" onclick="filterCategory('${cat}')">
+      <div class="category-img">${icon}</div>
+      <div class="category-name">${cat === "All" ? "All Products" : escapeHtml(categoryNames[cat] || cat)}</div>
+    </button>
+  `).join("");
+}
+
+function matchesCategory(product){
+  if(selectedCategory === "All") return true;
+  return String(product.category || "").toLowerCase() === selectedCategory.toLowerCase();
+}
+
+function renderProducts(){
+  const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+  let filtered = products.filter(p => {
+    const text = `${p.name || ""} ${p.category || ""} ${p.vendor_name || ""}`.toLowerCase();
+    return matchesCategory(p) && (!query || text.includes(query));
+  });
+
+  const container = document.getElementById("productSections");
+
+  if(!products.length){
+    container.innerHTML = `<div class="empty">No products found in the database.</div>`;
+    return;
+  }
+
+  if(query || selectedCategory !== "All"){
+    container.innerHTML = `
+      <div class="section-head">
+        <h2>${query ? "Search results" : escapeHtml(categoryNames[selectedCategory] || selectedCategory)}</h2>
+        <button class="see-all" onclick="filterCategory('All')">See all</button>
+      </div>
+      <div class="product-row">
+        ${filtered.length ? filtered.map(productCard).join("") : `<div class="empty">No matching products found.</div>`}
+      </div>`;
+    return;
+  }
+
+  const order = ["Daily","Sabzi","Anaj","Mithai","Drinks","Snacks","Breakfast","Bakery","Tea","Masala","Personal"];
+
+  const sections = [];
+  for(const cat of order){
+    const items = products.filter(p => String(p.category || "").toLowerCase() === cat.toLowerCase());
+    if(items.length){
+      sections.push(`
+        <div class="section">
+          <div class="section-head">
+            <h2>${escapeHtml(categoryNames[cat] || cat)}</h2>
+            <button class="see-all" onclick="filterCategory('${cat}')">see all</button>
+          </div>
+          <div class="product-row">
+            ${items.slice(0,8).map(productCard).join("")}
+          </div>
+        </div>`);
+    }
+  }
+
+  const used = new Set(order.map(x=>x.toLowerCase()));
+  const other = products.filter(p => !used.has(String(p.category || "").toLowerCase()));
+  if(other.length){
+    sections.push(`
+      <div class="section">
+        <div class="section-head"><h2>More products</h2></div>
+        <div class="product-row">${other.slice(0,8).map(productCard).join("")}</div>
+      </div>`);
+  }
+
+  container.innerHTML = sections.join("");
+}
+
+function productCard(p){
+  const q = Number(cart[p.id] || 0);
+  return `
+    <article class="product-card">
+      <div class="product-image">${imageHtml(p)}</div>
+      <div class="product-body">
+        <span class="delivery-time">◷ 20 MINS</span>
+        <div class="product-name">${escapeHtml(p.name)}</div>
+        <div class="product-unit">${escapeHtml(p.unit || p.category || "Product")}</div>
+        <div class="product-bottom">
+          <div class="price">${money(p.price)}</div>
+          ${q > 0 ? `
+            <div class="qty">
+              <button onclick="changeQty(${Number(p.id)},-1)">−</button>
+              <span>${q}</span>
+              <button onclick="changeQty(${Number(p.id)},1)">+</button>
+            </div>` :
+            `<button class="add-btn" onclick="changeQty(${Number(p.id)},1)">ADD</button>`}
+        </div>
+      </div>
+    </article>`;
+}
+
+function filterCategory(cat){
+  selectedCategory = cat;
+  document.getElementById("searchInput").value = "";
+  renderProducts();
+  document.getElementById("productsStart").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+async function loadDeliveryAreas(){
+  // Keep delivery fee/ETA configuration from the database for checkout fallback.
+  try{
+    const res = await fetch("/api/delivery-areas");
+    if(res.ok) deliveryAreas = await res.json();
+  }catch(e){ console.warn("Delivery config unavailable",e); }
+  updateLocationUI();
+  updateCheckoutLocation();
+}
+
+function setLocationState({lat=0,lng=0,address="",area="Sardarshahar",fee=20,etaMin=15,etaMax=30,verified=true}){
+  selectedLatitude = Number(lat || 0);
+  selectedLongitude = Number(lng || 0);
+  selectedAddress = address || "Current location";
+  selectedArea = area || "Sardarshahar";
+  selectedDeliveryFee = Number(fee || 20);
+  selectedEtaMin = Number(etaMin || 15);
+  selectedEtaMax = Number(etaMax || 30);
+  locationVerified = !!verified;
+  localStorage.setItem("turant_delivery_area", selectedArea);
+  localStorage.setItem("turant_delivery_address", selectedAddress);
+  localStorage.setItem("turant_latitude", String(selectedLatitude));
+  localStorage.setItem("turant_longitude", String(selectedLongitude));
+  localStorage.setItem("turant_location_verified", locationVerified ? "1" : "0");
+  updateLocationUI();
+  updateCheckoutLocation();
+  renderCart();
+}
+
+function clearLocation(){
+  selectedArea=""; selectedDeliveryFee=0; selectedEtaMin=0; selectedEtaMax=0;
+  selectedLatitude=0; selectedLongitude=0; selectedAddress=""; locationVerified=false;
+  ["turant_delivery_area","turant_delivery_address","turant_latitude","turant_longitude","turant_location_verified"].forEach(k=>localStorage.removeItem(k));
+  updateLocationUI(); updateCheckoutLocation(); renderCart();
+}
+
+function updateLocationUI(){
+  document.getElementById("headerArea").textContent = selectedAddress ? selectedAddress : "Select location";
+  document.getElementById("headerEta").textContent = selectedArea
+    ? `Delivery in ${selectedEtaMin}–${selectedEtaMax} minutes`
+    : "Select delivery location";
+}
+
+function updateCheckoutLocation(){
+  const box=document.getElementById("checkoutLocation");
+  const hidden=document.getElementById("customer-area");
+  if(!box) return;
+  if(selectedAddress){
+    box.innerHTML=`<b>📍 ${escapeHtml(selectedArea || "Sardarshahar")}</b><span>${escapeHtml(selectedAddress)}</span>`;
+    hidden.value=selectedArea || "Sardarshahar";
+  }else{
+    box.innerHTML='<b>📍 Location not selected</b><span>Select your location first.</span>';
+    hidden.value="";
+  }
+}
+
+function openLocationPicker(){
+  document.getElementById("locationSearchInput").value="";
+  document.getElementById("locationResults").innerHTML="";
+  setLocationStatus(selectedAddress ? `Current location: ${selectedAddress}` : "Location choose karne ke liye Detect ya Search use karein.", false);
+  document.getElementById("locationOverlay").classList.add("show");
+  document.getElementById("locationModal").classList.add("show");
+}
+function closeLocationPicker(){
+  document.getElementById("locationOverlay").classList.remove("show");
+  document.getElementById("locationModal").classList.remove("show");
+}
+function setLocationStatus(text,error=false){
+  const box=document.getElementById("locationStatus");
+  box.textContent=text; box.classList.add("show");
+  box.style.background=error?"#fff1f1":"#f7f8f7"; box.style.color=error?"#a00":"#666";
+}
+
+async function detectMyLocation(){
+  const btn=document.getElementById("detectLocationBtn");
+  if(!navigator.geolocation){ setLocationStatus("Is browser mein location detection supported nahi hai.",true); return; }
+  btn.disabled=true; btn.textContent="📍 Detecting location…";
+  setLocationStatus("Location permission allow karein…");
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat=pos.coords.latitude, lng=pos.coords.longitude;
+    try{
+      const check=await fetch("/api/location/check",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lat,lng})}).then(r=>r.json());
+      if(!check.serviceable){ setLocationStatus(check.message || "Delivery available nahi hai.",true); return; }
+      let address="Current location";
+      try{
+        const rev=await fetch("/api/location/reverse",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lat,lng})}).then(r=>r.json());
+        address=rev.address || address;
+      }catch(e){}
+      setLocationState({lat,lng,address,area:"Sardarshahar",fee:check.delivery_fee,etaMin:check.eta_min,etaMax:check.eta_max,verified:true});
+      setLocationStatus(`✓ Delivery available • ${check.distance_km} km from Sardarshahar center`);
+      setTimeout(closeLocationPicker,500);
+    }catch(e){ setLocationStatus("Location check nahi ho paaya. Server check karein.",true); }
+    finally{ btn.disabled=false; btn.textContent="📍 Detect my current location"; }
+  },err=>{
+    const msg=err.code===1?"Location permission denied. Browser settings se location allow karein.":"Current location nahi mil paayi. Search option use karein.";
+    setLocationStatus(msg,true); btn.disabled=false; btn.textContent="📍 Detect my current location";
+  },{enableHighAccuracy:true,timeout:10000,maximumAge:60000});
+}
+
+function debouncedLocationSearch(){
+  clearTimeout(locationSearchTimer);
+  const q=document.getElementById("locationSearchInput").value.trim();
+  if(q.length<3){document.getElementById("locationResults").innerHTML="";return;}
+  locationSearchTimer=setTimeout(()=>searchLocation(q),450);
+}
+async function searchLocation(q){
+  setLocationStatus("Searching location…");
+  try{
+    const res=await fetch(`/api/location/search?q=${encodeURIComponent(q)}`);
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||"Search failed");
+    const box=document.getElementById("locationResults");
+    if(!data.length){
+      box.innerHTML='<div class="empty">Location nahi mili. Sardarshahar ka address/landmark try karein.</div>';
+      setLocationStatus("Location nahi mili",true);
+      return;
+    }
+    box.innerHTML=data.map((x,i)=>`<button onclick='chooseSearchedLocation(${JSON.stringify(x)})'><b>📍 ${escapeHtml(x.display_name.split(",").slice(0,3).join(", "))}</b><div style="font-size:12px;color:#777;margin-top:4px">${escapeHtml(x.display_name)}${x.fallback?"<br><span style=\"color:#777\">📍 Local development result</span>":""}</div></button>`).join("");
+    setLocationStatus("Location found — select it below");
+  }catch(e){setLocationStatus("Location search temporarily unavailable. Detect current location try karein.",true);}
+}
+async function chooseSearchedLocation(x){
+  try{
+    const check=await fetch("/api/location/check",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lat:x.lat,lng:x.lng})}).then(r=>r.json());
+    if(!check.serviceable){setLocationStatus("Sorry, is location par Turant Bazaar abhi available nahi hai.",true);return;}
+    setLocationState({lat:x.lat,lng:x.lng,address:x.display_name,area:"Sardarshahar",fee:check.delivery_fee,etaMin:check.eta_min,etaMax:check.eta_max,verified:true});
+    setLocationStatus("✓ Delivery available");
+    setTimeout(closeLocationPicker,400);
+  }catch(e){setLocationStatus("Location verify nahi ho paayi.",true);}
+}
+
+function updateCheckoutTotals(){
+  const subtotal=cartSubtotal(); const fee=cartCount()?selectedDeliveryFee:0;
+  document.getElementById("checkoutSubtotal").textContent=money(subtotal);
+  document.getElementById("checkoutDeliveryFee").textContent=money(fee);
+  const total=subtotal+fee;
+  document.getElementById("checkoutTotal").textContent=money(total);
+  const placeBtn=document.getElementById("placeOrderBtn");
+  if(placeBtn) placeBtn.textContent=`Place Order • ${money(total)}`;
+}
+
+async function loadProducts(){
+  try{
+    const res = await fetch("/api/products");
+    if(!res.ok) throw new Error("Products API failed");
+    products = await res.json();
+    renderCategories();
+    renderProducts();
+  }catch(err){
+    console.error(err);
+    document.getElementById("productSections").innerHTML =
+      `<div class="empty">Products load nahi ho paaye. Flask server/database check karein.</div>`;
+  }
+}
+
+function changeQty(id, delta){
+  const current = Number(cart[id] || 0);
+  const next = current + delta;
+  if(next <= 0) delete cart[id];
+  else cart[id] = next;
+  renderProducts();
+  renderCart();
+}
+
+function cartData(){
+  return Object.entries(cart)
+    .map(([id,qty]) => {
+      const p = products.find(x => String(x.id) === String(id));
+      return p ? {product:p, quantity:Number(qty)} : null;
+    })
+    .filter(Boolean);
+}
+
+function cartSubtotal(){
+  return cartData().reduce((sum,item)=>sum + Number(item.product.price)*item.quantity,0);
+}
+
+function cartCount(){
+  return cartData().reduce((sum,item)=>sum + item.quantity,0);
+}
+
+function renderCart(){
+  const items = cartData();
+  const count = cartCount();
+  const subtotal = cartSubtotal();
+  const total = subtotal + (count ? selectedDeliveryFee : 0);
+
+  document.getElementById("cartBarText").textContent =
+    `${count} ${count === 1 ? "item" : "items"} — ${money(total)}`;
+
+  document.getElementById("cart-bar").classList.toggle("show", count > 0);
+  document.getElementById("topCart").classList.toggle("active", count > 0);
+  document.getElementById("cartSubtotal").textContent = money(subtotal);
+  document.getElementById("cartDeliveryFee").textContent = money(count ? selectedDeliveryFee : 0);
+  document.getElementById("cartTotal").textContent = money(total);
+
+  const box = document.getElementById("cartItems");
+  if(!items.length){
+    box.innerHTML = `<div class="empty">Your cart is empty.<br>Add some products to continue.</div>`;
+    return;
+  }
+
+  box.innerHTML = items.map(({product:p,quantity:q}) => `
+    <div class="cart-item">
+      <div class="cart-thumb">${emojiForProduct(p.name,p.category)}</div>
+      <div>
+        <div class="cart-item-name">${escapeHtml(p.name)}</div>
+        <div class="cart-item-price">${money(Number(p.price)*q)}</div>
+      </div>
+      <div class="cart-qty">
+        <button onclick="changeQty(${Number(p.id)},-1)">−</button>
+        <span>${q}</span>
+        <button onclick="changeQty(${Number(p.id)},1)">+</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function openCart(){
+  renderCart();
+  document.getElementById("cartOverlay").classList.add("show");
+  document.getElementById("cartDrawer").classList.add("show");
+}
+function closeCart(){
+  document.getElementById("cartOverlay").classList.remove("show");
+  document.getElementById("cartDrawer").classList.remove("show");
+}
+
+function proceedToCheckout(){
+  if(!cartCount()){ alert("Please add products first."); return; }
+  if(!currentUser){ closeCart(); showLogin(); return; }
+  if(!selectedArea || !locationVerified){ closeCart(); openLocationPicker(); return; }
+  closeCart();
+  document.getElementById("customer-area").value = selectedArea;
+  const checkoutLocationText=document.getElementById("checkoutLocationText");
+  if(checkoutLocationText) checkoutLocationText.textContent=selectedAddress || selectedArea;
+  updateCheckoutTotals();
+  document.getElementById("modalOverlay").classList.add("show");
+  document.getElementById("checkoutModal").classList.add("show");
+}
+
+function closeCheckout(){
+  document.getElementById("modalOverlay").classList.remove("show");
+  document.getElementById("checkoutModal").classList.remove("show");
+}
+
+function selectPayment(method){
+  document.querySelectorAll('.payment-option').forEach(el=>el.classList.remove('selected'));
+  const radio=document.querySelector(`input[name="payment"][value="${method}"]`);
+  if(radio){radio.checked=true; radio.closest('.payment-option')?.classList.add('selected');}
+}
+
+function changeCheckoutLocation(){
+  closeCheckout();
+  openLocationPicker();
+}
+
+function openOrderSuccess(data,payment,name,address,area){
+  lastOrderId = data.order_id;
+  document.getElementById('successOrderNumber').textContent=`Order #${data.order_id}`;
+  document.getElementById('successPayment').textContent=payment==='cod'?'Cash on Delivery':'UPI';
+  document.getElementById('successTotal').textContent=money(data.total);
+  document.getElementById('successAddress').textContent=`${address}, ${area}`;
+  document.getElementById('orderSuccessOverlay').classList.add('show');
+  document.getElementById('orderSuccessModal').classList.add('show');
+}
+function closeOrderSuccess(){
+  document.getElementById('orderSuccessOverlay').classList.remove('show');
+  document.getElementById('orderSuccessModal').classList.remove('show');
+}
+async function openMyOrdersFromSuccess(){
+  closeOrderSuccess();
+  await showMyOrders();
+}
+
+async function placeOrder(){
+  const name = document.getElementById("customer-name").value.trim();
+  const phone = document.getElementById("customer-phone").value.trim();
+  const address = document.getElementById("customer-address").value.trim();
+  const area = document.getElementById("customer-area").value.trim();
+  const landmark = document.getElementById("customer-landmark").value.trim();
+  const payment = document.querySelector('input[name="payment"]:checked')?.value || "cod";
+
+  if(!name || !phone || !address || !area){
+    alert("Please fill Name, Mobile, House/Street and Delivery Area.");
+    return;
+  }
+  if(!selectedArea || !locationVerified || area !== selectedArea){
+    alert("Please select a valid serviceable location.");
+    return;
+  }
+  if(!/^\d{10}$/.test(phone)){
+    alert("Please enter a valid 10 digit mobile number.");
+    return;
+  }
+
+  const items = cartData().map(({product,quantity}) => ({
+    product_id:Number(product.id),
+    quantity:Number(quantity)
+  }));
+
+  if(!items.length){
+    alert("Cart is empty.");
+    return;
+  }
+
+  const btn = document.getElementById("placeOrderBtn");
+  btn.disabled = true;
+  btn.textContent = "Placing Order...";
+
+  try{
+    const res = await fetch("/api/orders",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        customer_name:name,
+        customer_phone:phone,
+        delivery_address:address,
+        delivery_area:area,
+        landmark:landmark,
+        payment_method:payment,
+        latitude:selectedLatitude,
+        longitude:selectedLongitude,
+        location_verified:locationVerified,
+        items
+      })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok) throw new Error(data.error || "Order failed");
+
+    cart = {};
+    closeCheckout();
+    renderProducts();
+    renderCart();
+    openOrderSuccess(data,payment,name,address,area);
+
+  }catch(err){
+    console.error(err);
+    alert("Order place nahi ho paaya: " + err.message);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = `Place Order • ${money(cartSubtotal() + (cartCount() ? selectedDeliveryFee : 0))}`;
+  }
+}
+
+function statusLabel(status){
+  return String(status||'placed').replaceAll('_',' ');
+}
+function statusIndex(status){
+  const s=String(status||'placed');
+  if(s==='cancelled') return -1;
+  return ['placed','confirmed','preparing','out_for_delivery','delivered'].indexOf(s);
+}
+function renderTracking(order){
+  const body=document.getElementById('trackingBody');
+  const current=statusIndex(order.status);
+  const cancelled=String(order.status)==='cancelled';
+  const steps=[
+    ['placed','Order Placed','We received your order'],
+    ['confirmed','Confirmed','Vendor has confirmed your order'],
+    ['preparing','Preparing','Your items are being packed'],
+    ['out_for_delivery','Out for Delivery','Your order is on the way'],
+    ['delivered','Delivered','Order delivered successfully']
+  ];
+  const html=steps.map((st,i)=>{
+    const done=!cancelled && current>=i;
+    const active=!cancelled && current===i;
+    return `<div class="tracking-step ${done?'done':''} ${active?'active':''}">
+      <div class="tracking-dot">${done?'✓':''}</div>
+      <div><b>${st[1]}</b><small>${st[2]}</small></div>
+    </div>`;
+  }).join('');
+  body.innerHTML=`
+    <div class="tracking-card">
+      <div class="tracking-head"><b>Order #${order.id}</b><span class="tracking-status" style="color:${cancelled?'#c62828':'var(--green)'}">${escapeHtml(statusLabel(order.status))}</span></div>
+      <div style="color:#777;font-size:12px;margin-top:6px">${(order.items||[]).map(i=>escapeHtml(i.product_name||'Product')+' × '+i.quantity).join(', ')}</div>
+      <div style="margin-top:10px"><b>Total ${money(order.total_amount)}</b> • ${escapeHtml((order.payment_method||'cod').toUpperCase())}</div>
+      <div class="tracking-steps">${cancelled?'<div style="padding:12px;background:#fff3f3;color:#c62828;border-radius:10px;font-weight:800;margin-bottom:14px">This order has been cancelled.</div>':''}${html}</div>
+      <div style="border:1px solid #eee;border-radius:10px;padding:12px"><b>📍 Deliver to</b><small style="display:block;color:#666;margin-top:5px">${escapeHtml(order.delivery_address||'')}${order.delivery_area?', '+escapeHtml(order.delivery_area):''}</small>${order.landmark?`<small style="display:block;color:#888;margin-top:3px">Landmark: ${escapeHtml(order.landmark)}</small>`:''}</div>
+      <div class="track-actions">
+        <button class="track-refresh" onclick="refreshTracking(${order.id})">↻ Refresh Status</button>
+        <button class="checkout-main" onclick="closeTracking()">Done</button>
+      </div>
+    </div>`;
+}
+async function refreshTracking(orderId,showLoading=false){
+  try{
+    const res=await fetch('/api/my-orders');
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Failed');
+    const order=data.find(o=>Number(o.id)===Number(orderId));
+    if(!order){document.getElementById('trackingBody').innerHTML='<div class="empty">Order nahi mila.</div>';return;}
+    renderTracking(order);
+  }catch(e){document.getElementById('trackingBody').innerHTML='<div class="empty">Order status load nahi ho paaya. Refresh karke try karein.</div>';}
+}
+async function openTracking(orderId){
+  if(!currentUser){showLogin();return;}
+  lastOrderId=orderId||lastOrderId;
+  if(!lastOrderId){return;}
+  document.getElementById('trackingOverlay').classList.add('show');
+  document.getElementById('trackingModal').classList.add('show');
+  document.getElementById('trackingBody').innerHTML='<div class="empty">Loading order status…</div>';
+  await refreshTracking(lastOrderId);
+  clearInterval(trackingTimer);
+  trackingTimer=setInterval(()=>{ if(document.getElementById('trackingModal').classList.contains('show')) refreshTracking(lastOrderId); },15000);
+}
+function closeTracking(){
+  document.getElementById('trackingOverlay').classList.remove('show');
+  document.getElementById('trackingModal').classList.remove('show');
+  clearInterval(trackingTimer);
+  trackingTimer=null;
+}
+function openTrackingFromSuccess(){
+  closeOrderSuccess();
+  openTracking(lastOrderId);
+}
+
+async function showLogin(){
+  if(currentUser){
+    document.getElementById("accountName").textContent=currentUser.name || "Customer";
+    document.getElementById("accountPhone").textContent="+91 "+currentUser.phone;
+    document.getElementById("accountMenu").classList.toggle("show");
+    return;
+  }
+  document.getElementById("authOverlay").classList.add("show");
+  document.getElementById("authModal").classList.add("show");
+  document.getElementById("loginPhone").focus();
+}
+function closeLogin(){document.getElementById("authOverlay").classList.remove("show");document.getElementById("authModal").classList.remove("show");}
+function closeAccountMenu(){document.getElementById("accountMenu").classList.remove("show");}
+function backToPhone(){document.getElementById("otpStep").style.display="none";document.getElementById("phoneStep").style.display="block";document.getElementById("devOtp").classList.remove("show");}
+async function sendOtp(){
+  const phone=document.getElementById("loginPhone").value.trim();
+  if(!/^\d{10}$/.test(phone)){alert("Please enter a valid 10 digit mobile number.");return;}
+  const btn=document.getElementById("sendOtpBtn");btn.disabled=true;btn.textContent="Sending OTP…";
+  try{
+    const res=await fetch("/api/auth/request-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
+    const data=await res.json(); if(!res.ok) throw new Error(data.error||"OTP failed");
+    document.getElementById("phoneStep").style.display="none";document.getElementById("otpStep").style.display="block";
+    const boxes=[...document.querySelectorAll(".otp-input")]; boxes.forEach((b,i)=>{b.value="";b.oninput=()=>{if(b.value&&boxes[i+1])boxes[i+1].focus();};b.onkeydown=e=>{if(e.key==="Backspace"&&!b.value&&boxes[i-1])boxes[i-1].focus();};}); boxes[0].focus();
+    if(data.development_only){const d=document.getElementById("devOtp");d.textContent="Development mode OTP: "+data.dev_otp;d.classList.add("show");}
+  }catch(e){alert(e.message);}finally{btn.disabled=false;btn.textContent="Continue";}
+}
+async function verifyOtp(){
+  const phone=document.getElementById("loginPhone").value.trim();
+  const otp=[...document.querySelectorAll(".otp-input")].map(x=>x.value).join("");
+  if(otp.length!==6){alert("6 digit OTP enter karein.");return;}
+  const btn=document.getElementById("verifyOtpBtn");btn.disabled=true;btn.textContent="Verifying…";
+  try{
+    const res=await fetch("/api/auth/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
+    const data=await res.json();if(!res.ok)throw new Error(data.error||"Verification failed");
+    currentUser=data.user; updateLoginUI(); closeLogin();
+    if(!selectedArea) openLocationPicker();
+    else alert("Login successful! 🎉");
+  }catch(e){alert(e.message);}finally{btn.disabled=false;btn.textContent="Verify & Continue";}
+}
+function updateLoginUI(){
+  const btn=document.getElementById("loginBtn");
+  if(currentUser){btn.textContent=currentUser.name||"Account";}
+  else btn.textContent="Login";
+}
+async function loadCurrentUser(){
+  try{const res=await fetch("/api/auth/me");const data=await res.json();if(data.logged_in){currentUser=data.user;updateLoginUI();}}catch(e){console.warn(e);}
+}
+async function logoutCustomer(){
+  await fetch("/api/auth/logout",{method:"POST"});currentUser=null;closeAccountMenu();updateLoginUI();alert("Logged out successfully.");
+}
+async function openMyOrders(){
+  if(!currentUser){showLogin();return;}
+  document.getElementById("ordersOverlay").classList.add("show");document.getElementById("ordersModal").classList.add("show");
+  const body=document.getElementById("myOrdersBody");body.innerHTML='<div class="empty">Loading orders…</div>';
+  try{
+    const res=await fetch("/api/my-orders");const data=await res.json();if(!res.ok)throw new Error(data.error||"Failed to load orders");
+    if(!data.length){body.innerHTML='<div class="empty">Abhi koi order nahi hai.</div>';return;}
+    body.innerHTML=data.map(o=>`<div style="border:1px solid #ddd;border-radius:12px;padding:15px;margin-bottom:10px"><div style="display:flex;justify-content:space-between;gap:10px"><b>Order #${o.id}</b><b style="color:var(--green)">${escapeHtml(String(o.status).replaceAll("_"," ").toUpperCase())}</b></div><div style="color:#777;font-size:12px;margin:6px 0">${escapeHtml(o.created_at||"")}</div><div>${(o.items||[]).map(i=>escapeHtml(i.product_name||"Product")+" × "+i.quantity).join(", ")}</div><div style="margin-top:8px"><b>Total ${money(o.total_amount)}</b> • ${escapeHtml((o.payment_method||"cod").toUpperCase())}</div><div style="font-size:12px;color:#666;margin-top:6px">📍 ${escapeHtml(o.delivery_address||"")}</div><button class="track-refresh" style="margin-top:10px;width:100%" onclick="openTracking(${o.id})">🚚 Track Order</button></div>`).join("");
+  }catch(e){body.innerHTML='<div class="empty">Orders load nahi ho paaye.</div>';}
+}
+function closeMyOrders(){document.getElementById("ordersOverlay").classList.remove("show");document.getElementById("ordersModal").classList.remove("show");}
+
+document.addEventListener("click",e=>{if(!e.target.closest("#loginBtn")&&!e.target.closest("#accountMenu"))closeAccountMenu();});
+
+renderCategories();
+renderCart();
+loadDeliveryAreas();
+document.querySelectorAll('input[name="payment"]').forEach(r=>r.addEventListener('change',()=>selectPayment(r.value)));
+loadProducts();
+loadCurrentUser();
+</script>
+</body>
+</html>

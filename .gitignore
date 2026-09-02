@@ -1,0 +1,7 @@
+DB_pass.txt
+preview.db
+*.env
+.env
+__pycache__/
+*.pyc
+venv/
